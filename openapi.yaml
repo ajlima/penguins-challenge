@@ -1,0 +1,171 @@
+openapi: 3.0.3
+info:
+  title: Penguins Challenge - OpenAPI 3.0
+  description: |-
+    # This contract describes the  service that should be developed by each participant of this challenge.**
+    
+    **Rules:**
+    
+    1) The data of this service should be stored in one of following databases: (PostgreSQL, MySQL or MongoDB);
+    2) This service should be deployed on a Docker-compose with 2.0 CPU and 4Gb memory limit;
+    3) Participants can choose any programming language of their choice, the unique restriction is that this service should run on a docker-compose environment;
+    4) The people table structure should be capable to store all informations of Person object
+    5) The endpoint responsible for the search of all people using a query parameter must execute this search on all fields of Person object, it means that any value used on insert person can be used on this search, including part o this information. Ex: name = Alexandre Lima, if the user inform at query parameter only q=Alex this record should be included on the result;
+    6) All database objects and configuration should be created automatically when this enviroment is started;
+    7) You can distribute the amount of resources as you want, but it is important to say that all records should be stored on the database that you choose;
+    8) The winner of this challenge will be the participant that create the application capable to process more request 
+    
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: alexandre.lima@icloud.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+paths:
+  /people:
+    post:
+      tags:
+        - People
+      summary: Insert one person in a DB
+      description: Insert person in a DB 
+      operationId: insertPerson
+      requestBody:
+        description: Insert a new person on DB
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PersonCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+          headers:
+            Location:
+              required: true
+              schema:
+                type: string
+              description: Location of new record created with /people/[:id]
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+        '400':
+          description: Invalid request body, this error code should be used when you found some inconsistence problem with the body of the request
+        '422':
+          description: Invalid requests, this error code should be used whenever the record alredy exists on DB, some required field was not filled 
+    
+    get:
+      tags:
+        - People
+      summary: Get people list based on query parameter
+      description: Get people list based on query parameter
+      parameters:
+        - in: query
+          name: q
+          required: true
+          schema:
+            type: string
+          description: Search query string
+      responses:
+        '200':
+          description: List of person founded
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person' 
+
+  /people/{id}:
+    get:
+      tags:
+        - People
+      summary: Get one person by id
+      description: Retrieve one person by id
+      operationId: getPerson
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Id of the person generated after save
+      responses:
+        '200':
+          description: OK, Person located and returned to requester
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+        '404':
+          description: Id not found on DB
+  
+  /people/count:
+    get:
+      tags:
+        - People
+      summary: Count of the records saved on database
+      description: Count of the records saved on database
+      operationId: countPerson
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: integer
+                example: 1000
+
+components:
+  schemas:
+    PersonCreate:
+      type: object
+      properties:
+        nickName:
+          type: string
+          example: alex01
+        name:
+          type: string
+          example: Alexandre Lima
+        phone:
+          type: string
+          example: +1 125 555 223 555 
+        birthDate:
+          type: string
+          example: 1980-09-01
+        skills:
+          type: array
+          items: 
+            type: string
+            example: Java
+        hobbies:
+          type: array
+          items:
+            type: string
+            example: Beach
+    Person:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 83dfb6ca-d212-4714-8674-6aa6ed1f2264
+        name:
+          type: string
+          example: Alexandre Lima
+        phone:
+          type: string
+          example: +1 125 555 223 555 
+        birthDate:
+          type: string
+          example: 1980-09-01
+        skills:
+          type: array
+          items: 
+            type: string
+            example: Java
+        hobbies:
+          type: array
+          items:
+            type: string
+            example: Beach
