@@ -2,19 +2,7 @@ openapi: 3.0.3
 info:
   title: Penguins Challenge - OpenAPI 3.0
   description: |-
-    # This contract describes the  service that should be developed by each participant of this challenge.**
-    
-    **Rules:**
-    
-    1) The data of this service should be stored in one of following databases: (PostgreSQL, MySQL or MongoDB);
-    2) This service should be deployed on a Docker-compose with 2.0 CPU and 4Gb memory limit;
-    3) Participants can choose any programming language of their choice, the unique restriction is that this service should run on a docker-compose environment;
-    4) The people table structure should be capable to store all informations of Person object
-    5) The endpoint responsible for the search of all people using a query parameter must execute this search on all fields of Person object, it means that any value used on insert person can be used on this search, including part o this information. Ex: name = Alexandre Lima, if the user inform at query parameter only q=Alex this record should be included on the result;
-    6) All database objects and configuration should be created automatically when this enviroment is started;
-    7) You can distribute the amount of resources as you want, but it is important to say that all records should be stored on the database that you choose;
-    8) The winner of this challenge will be the participant that create the application capable to process more request 
-    
+    # This is a sample server for a Penguins Challenge.
   termsOfService: http://swagger.io/terms/
   contact:
     email: alexandre.lima@icloud.com
