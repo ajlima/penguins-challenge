@@ -1,6 +1,6 @@
 # Penguins Challenger
 
-![alt text](https://github.com/ajlima/penguins-challenge/blob/56d2f66d609bd730e8bf4e4dfe798e9884ec8fe7/images/penguins-challenge.jpg?raw=true)
+![alt text](https://github.com/ajlima/penguins-challenge/blob/3fe3be7589ed5ef80738bb78217146cb11418aae/images/penguins-challenge.jpg?raw=true)
 
 ### This are the rules of our challenge:
     
